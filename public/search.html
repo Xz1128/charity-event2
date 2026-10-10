@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search events · Harbour Hope</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Harbour Hope
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="index.html">Home</a>
+          <a href="search.html" aria-current="page">Search events</a>
+          <a href="contact.html">Contact</a>
+          <a class="nav-donate" href="contact.html#donate">Donate</a>
+          <a class="nav-admin" href="admin.html">Admin</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page" id="main">
+      <p class="eyebrow">Discover</p>
+      <h1>Search charity events</h1>
+      <p class="lede">Use any combination of date, location, and category. Past events can still be found by date or category; suspended listings never appear in results.</p>
+
+      <div class="search-layout">
+        <form id="search-form" class="search-form">
+          <p class="hint">Choose one or more filters, then search.</p>
+
+          <label for="date">Event date</label>
+          <input id="date" name="date" type="date">
+
+          <label for="location">Location</label>
+          <input id="location" name="location" type="text" maxlength="80" placeholder="e.g. Southport or HOTA">
+
+          <label for="categoryId">Category</label>
+          <select id="categoryId" name="categoryId">
+            <option value="">All categories</option>
+          </select>
+
+          <div class="form-actions">
+            <button class="btn" type="submit">Search</button>
+            <button class="btn secondary" id="clear-filters" type="button">Clear filters</button>
+          </div>
+        </form>
+
+        <section>
+          <h2>Results</h2>
+          <p id="search-message" class="banner error" hidden></p>
+          <div id="search-results" class="event-grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Harbour Hope Foundation · PROG2002 Assessment 3</p>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

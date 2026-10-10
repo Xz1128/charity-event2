@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin dashboard · Harbour Hope</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="admin.html"><span class="brand-mark" aria-hidden="true"></span>Harbour Hope Admin</a>
+      <nav class="site-nav" aria-label="Admin navigation">
+        <a href="admin.html" aria-current="page">Dashboard</a>
+        <a href="index.html">Home</a>
+        <a href="search.html">Search events</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main class="page" id="main">
+    <p class="eyebrow">Staff workspace</p>
+    <h1>Event management</h1>
+    <p class="lede">Create, update, and manage charity events. Events with registrations cannot be deleted; suspend them instead.</p>
+    <p id="admin-message" class="banner info" hidden></p>
+    <div class="admin-layout">
+      <section>
+        <div class="section-head">
+          <div><h2>All events</h2><p class="hint">Includes upcoming, past, and suspended events.</p></div>
+          <button class="btn gold" id="new-event" type="button">+ New event</button>
+        </div>
+        <div id="admin-event-list" class="admin-event-list"><p class="hint">Loading events…</p></div>
+        <section class="category-panel">
+          <h2>Event categories</h2>
+          <form id="category-form" class="contact-form">
+            <input type="hidden" id="categoryEditId">
+            <label for="categoryName">Category name *</label>
+            <input id="categoryName" maxlength="80" required>
+            <label for="categoryDescription">Description *</label>
+            <input id="categoryDescription" maxlength="255" required>
+            <div class="form-actions">
+              <button class="btn gold" type="submit" id="save-category">Add category</button>
+              <button class="btn secondary" type="button" id="clear-category">Clear</button>
+            </div>
+          </form>
+          <div id="admin-category-list" class="admin-event-list"><p class="hint">Loading categories…</p></div>
+        </section>
+      </section>
+      <section class="ticket-box" id="event-editor">
+        <h2 id="editor-title">Create an event</h2>
+        <form id="event-form">
+          <input type="hidden" id="eventId">
+          <input type="hidden" id="organisationId" value="1">
+          <label for="name">Event name *</label><input id="name" maxlength="160" required>
+          <label for="purpose">Purpose *</label><input id="purpose" maxlength="255" required>
+          <label for="shortDescription">Short description *</label><textarea id="shortDescription" maxlength="280" required></textarea>
+          <label for="fullDescription">Full description *</label><textarea id="fullDescription" required></textarea>
+          <label for="eventDate">Event date *</label><input id="eventDate" type="date" required>
+          <div class="two-fields">
+            <div><label for="startTime">Start time *</label><input id="startTime" type="time" required></div>
+            <div><label for="endTime">End time *</label><input id="endTime" type="time" required></div>
+          </div>
+          <label for="categoryId">Category *</label><select id="categoryId" required><option value="">Loading categories…</option></select>
+          <label for="locationId">Venue / location *</label><select id="locationId" required><option value="">Loading locations…</option></select>
+          <label for="ticketPrice">Ticket price (AUD) *</label><input id="ticketPrice" type="number" min="0" step="0.01" value="0" required>
+          <label for="fundraisingGoal">Fundraising goal (AUD) *</label><input id="fundraisingGoal" type="number" min="0.01" step="0.01" value="1000" required>
+          <label for="fundsRaised">Funds raised (AUD)</label><input id="fundsRaised" type="number" min="0" step="0.01" value="0">
+          <label for="imageUrl">Image URL *</label><input id="imageUrl" maxlength="400" value="/images/event-1.jpg" required>
+          <label class="checkbox-label"><input id="isSuspended" type="checkbox"> Suspend this event (hide from public listings)</label>
+          <div class="form-actions">
+            <button class="btn gold" id="save-event" type="submit">Save event</button>
+            <button class="btn secondary" id="cancel-edit" type="button">Clear form</button>
+          </div>
+        </form>
+        <div id="editor-registrations" class="editor-registrations" hidden>
+          <h3>Registrations for this event</h3>
+          <div id="editor-registration-list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><p>Harbour Hope Foundation · PROG2002 Assessment 3 Admin</p></footer>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

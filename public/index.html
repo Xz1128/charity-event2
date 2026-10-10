@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harbour Hope Foundation · Charity events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Harbour Hope
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="search.html">Search events</a>
+          <a href="contact.html">Contact</a>
+          <a class="nav-donate" href="contact.html#donate">Donate</a>
+          <a class="nav-admin" href="admin.html">Admin</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page" id="main">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Gold Coast charity events</p>
+          <h1 id="org-name">Harbour Hope Foundation</h1>
+          <p class="lede" id="org-tagline">Local hearts. Lasting change.</p>
+          <p id="org-welcome">Loading organisation details…</p>
+          <p>
+            <a class="btn" href="search.html">Find an event</a>
+          </p>
+        </div>
+        <aside class="hero-panel" id="contact">
+          <h2>Visit &amp; contact</h2>
+          <dl id="org-contact">
+            <dt>Email</dt><dd>hello@harbourhope.org.au</dd>
+            <dt>Phone</dt><dd>(07) 5550 2140</dd>
+            <dt>Visit</dt><dd>12 Marine Parade, Southport QLD 4215</dd>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="mission">
+        <h2>Our mission</h2>
+        <p id="org-mission">Loading mission…</p>
+      </section>
+
+      <section class="impact" id="impact" hidden>
+        <div class="impact-card">
+          <span class="impact-num" id="impact-raised"></span>
+          <span class="impact-label">raised for local causes</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-num" id="impact-events"></span>
+          <span class="impact-label">events open for registration</span>
+        </div>
+        <div class="impact-card">
+          <span class="impact-num" id="impact-causes"></span>
+          <span class="impact-label">causes supported this season</span>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">This season</p>
+            <h2>Current &amp; upcoming events</h2>
+            <p class="hint">Past events and suspended listings are not shown here — find past events on the Search page.</p>
+          </div>
+        </div>
+        <p id="home-error" class="banner error" hidden></p>
+        <div id="event-list" class="event-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Harbour Hope Foundation · not a real organisation · PROG2002 Assessment 3</p>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>

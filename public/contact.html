@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact · Harbour Hope</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Harbour Hope
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="index.html">Home</a>
+          <a href="search.html">Search events</a>
+          <a href="contact.html" aria-current="page">Contact</a>
+          <a class="nav-donate" href="contact.html#donate">Donate</a>
+          <a class="nav-admin" href="admin.html">Admin</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page" id="main">
+      <p class="eyebrow">Get in touch</p>
+      <h1>Contact Harbour Hope</h1>
+      <p class="lede">Questions about an event, volunteering, or partnering with us? We would love to hear from you.</p>
+      <p id="contact-error" class="banner error" hidden></p>
+
+      <aside class="register-box" id="donate">
+        <h2>Donate</h2>
+        <p>Every ticket is a donation — the full ticket price goes to the cause it supports.</p>
+        <p class="hint">Online giving opens in Assessment 3. Until then, choose an event on the Home page and register to give.</p>
+      </aside>
+
+      <div class="search-layout">
+        <aside class="hero-panel">
+          <h2>Visit &amp; contact</h2>
+          <dl id="org-details">
+            <dt>Email</dt><dd>hello@harbourhope.org.au</dd>
+            <dt>Phone</dt><dd>(07) 5550 2140</dd>
+            <dt>Visit</dt><dd>12 Marine Parade, Southport QLD 4215</dd>
+            <dt>City</dt><dd>Gold Coast</dd>
+          </dl>
+          <p class="hint">Office hours: Monday to Friday, 9 am to 5 pm AEST.</p>
+        </aside>
+
+        <section>
+          <h2>Send a message</h2>
+          <form id="contact-form" class="contact-form">
+            <p class="hint">Required fields are marked with an asterisk.</p>
+
+            <label for="name">Name *</label>
+            <input id="name" name="name" type="text" maxlength="100" required>
+
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" maxlength="120" required>
+
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" maxlength="1000" required></textarea>
+
+            <div class="form-actions">
+              <button class="btn" type="submit">Send message</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>Harbour Hope Foundation · PROG2002 Assessment 3</p>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/contact.js"></script>
+  </body>
+</html>

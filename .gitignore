@@ -1,0 +1,9 @@
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+*.log
+
+# Angular build output (rebuilt with `npm run build` before deploying)
+charity-client/dist/
+charity-admin/dist/

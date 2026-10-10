@@ -1,0 +1,27 @@
+# Normalise line endings so the project checks out the same way on every machine.
+# Git stores LF in the repository; the working copy uses the platform default.
+* text=auto eol=lf
+
+# Windows-only helper scripts should keep CRLF so they run in cmd/PowerShell.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets must never be line-ending converted.
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+
+# Office documents are binary containers; never line-ending convert them.
+*.docx binary
+*.doc  binary
+*.pptx binary
+*.xlsx binary
+
+# Keep SQL dumps diffable as text.
+*.sql text eol=lf
+
+# Lockfiles are generated; collapse them in review.
+package-lock.json -diff linguist-generated

@@ -1,0 +1,27 @@
+{
+  "name": "charity-events",
+  "version": "1.0.0",
+  "description": "PROG2002 Assessment 3 — Harbour Hope charity events platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "charity",
+    "events",
+    "express",
+    "mysql",
+    "prog2002"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mysql2": "^3.14.0"
+  }
+}
