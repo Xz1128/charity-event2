@@ -1,0 +1,71 @@
+<p class="eyebrow">Save your place</p>
+<h1>Event registration</h1>
+<p class="lede">Review the event details, then enter your contact information.</p>
+
+@if (error) {
+  <p class="banner error">{{ error }}</p>
+}
+@if (success) {
+  <p class="banner info">{{ success }}</p>
+}
+
+@if (loading) {
+  <div class="loading" role="status" aria-live="polite">
+    <span class="spinner" aria-hidden="true"></span>
+    <span>Loading event information…</span>
+  </div>
+}
+
+@if (event) {
+  <section class="ticket-box">
+    <div class="selected-event">
+      <img [src]="event.imageUrl" [alt]="event.name">
+      <div>
+        <p class="eyebrow">{{ event.category.name }}</p>
+        <h2>{{ event.name }}</h2>
+        <p>{{ event.purpose }}</p>
+        <p class="meta">{{ formatDate(event.eventDate) }} · {{ event.location.venueName }}</p>
+        <p><strong>Ticket price:</strong> {{ formatMoney(event.ticketPrice) }}</p>
+      </div>
+    </div>
+  </section>
+
+  @if (event.status !== 'past' && !success) {
+    <form class="contact-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2>Your details</h2>
+
+      <label for="fullName">Full name *</label>
+      <input id="fullName" formControlName="fullName" type="text" minlength="2" maxlength="120"
+             autocomplete="name">
+      @if (form.get('fullName')?.invalid && form.get('fullName')?.touched) {
+        <p class="hint">Please enter your full name (2–120 characters).</p>
+      }
+
+      <label for="email">Email address *</label>
+      <input id="email" formControlName="email" type="email" maxlength="120" autocomplete="email">
+      @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <p class="hint">Please enter a valid email address.</p>
+      }
+
+      <label for="phone">Contact phone *</label>
+      <input id="phone" formControlName="phone" type="tel" minlength="5" maxlength="40" autocomplete="tel">
+      @if (form.get('phone')?.invalid && form.get('phone')?.touched) {
+        <p class="hint">Please enter a valid contact phone number.</p>
+      }
+
+      <label for="tickets">Number of tickets *</label>
+      <input id="tickets" formControlName="tickets" type="number" min="1" max="10">
+
+      <div class="form-actions">
+        <button class="btn gold" type="submit" [disabled]="submitting">
+          {{ submitting ? 'Submitting…' : 'Complete registration' }}
+        </button>
+        <a class="btn secondary" [routerLink]="['/event', event.eventId]">Back to event</a>
+      </div>
+    </form>
+  } @else if (success) {
+    <div class="form-actions">
+      <a class="btn secondary" [routerLink]="['/event', event.eventId]">Return to event details</a>
+    </div>
+  }
+}

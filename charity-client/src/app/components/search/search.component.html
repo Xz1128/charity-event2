@@ -1,0 +1,54 @@
+<p class="eyebrow">Discover</p>
+<h1>Search charity events</h1>
+<p class="lede">Use any combination of date, location, and category. Past events can still be found by date or category; suspended listings never appear in results.</p>
+
+<div class="search-layout">
+  <form class="search-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p class="hint">Choose one or more filters, then search.</p>
+
+    <label for="date">Event date</label>
+    <input id="date" formControlName="date" type="date">
+
+    <label for="location">Location</label>
+    <input id="location" formControlName="location" type="text" maxlength="80"
+           placeholder="e.g. Southport or HOTA">
+
+    <label for="categoryId">Category</label>
+    <select id="categoryId" formControlName="categoryId">
+      <option value="">All categories</option>
+      @for (category of categories; track category.categoryId) {
+        <option [value]="category.categoryId">{{ category.name }}</option>
+      }
+    </select>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Search</button>
+      <button class="btn secondary" type="button" (click)="clearFilters()">Clear filters</button>
+    </div>
+  </form>
+
+  <section>
+    <h2>Results</h2>
+
+    @if (message) {
+      <p class="banner" [class.error]="messageType === 'error'"
+         [class.empty]="messageType === 'empty'"
+         [class.info]="messageType === 'info'">{{ message }}</p>
+    }
+
+    @if (loading) {
+      <div class="loading" role="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Searching events…</span>
+      </div>
+    } @else if (results.length) {
+      <div class="event-grid">
+        @for (event of results; track event.eventId) {
+          <app-event-card [event]="event" />
+        }
+      </div>
+    } @else if (!searched) {
+      <p class="hint">Use the filters on the left and press Search to see matching events.</p>
+    }
+  </section>
+</div>

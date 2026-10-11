@@ -1,0 +1,71 @@
+<section class="hero">
+  <div>
+    <p class="eyebrow">Gold Coast charity events</p>
+    <h1>{{ organisation?.name }}</h1>
+    <p class="lede">{{ organisation?.tagline }}</p>
+    <p>{{ organisation?.welcomeMessage }}</p>
+    <p><a class="btn" routerLink="/search">Find an event</a></p>
+  </div>
+  <aside class="hero-panel">
+    <h2>Visit &amp; contact</h2>
+    <dl>
+      <dt>Email</dt>
+      <dd><a [href]="'mailto:' + organisation?.email">{{ organisation?.email }}</a></dd>
+      <dt>Phone</dt>
+      <dd>{{ organisation?.phone }}</dd>
+      <dt>Visit</dt>
+      <dd>{{ organisation?.address }}</dd>
+      <dt>City</dt>
+      <dd>{{ organisation?.city }}</dd>
+    </dl>
+  </aside>
+</section>
+
+<section class="mission">
+  <h2>Our mission</h2>
+  <p>{{ organisation?.mission }}</p>
+</section>
+
+@if (events.length) {
+  <section class="impact">
+    <div class="impact-card">
+      <span class="impact-num">{{ formatMoney(totalRaised) }}</span>
+      <span class="impact-label">raised for local causes</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">{{ events.length }}</span>
+      <span class="impact-label">events open for registration</span>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">{{ causeCount }}</span>
+      <span class="impact-label">causes supported this season</span>
+    </div>
+  </section>
+}
+
+<section>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">This season</p>
+      <h2>Current &amp; upcoming events</h2>
+      <p class="hint">Past events and suspended listings are not shown here — find past events on the Search page.</p>
+    </div>
+  </div>
+
+  @if (error) {
+    <p class="banner error">{{ error }}</p>
+  } @else if (loading) {
+    <div class="loading" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <span>Loading upcoming events…</span>
+    </div>
+  } @else if (!events.length) {
+    <p class="banner empty">There are no upcoming events right now. Please check the search page for past events.</p>
+  } @else {
+    <div class="event-grid">
+      @for (event of events; track event.eventId) {
+        <app-event-card [event]="event" />
+      }
+    </div>
+  }
+</section>

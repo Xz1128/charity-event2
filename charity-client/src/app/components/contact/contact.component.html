@@ -1,0 +1,50 @@
+<p class="eyebrow">Get in touch</p>
+<h1>Contact Harbour Hope</h1>
+<p class="lede">Questions about an event, volunteering, or partnering with us? We would love to hear from you.</p>
+
+<aside class="register-box" id="donate">
+  <h2>Donate</h2>
+  <p>Every ticket is a donation — the full ticket price goes to the cause it supports.</p>
+  <p class="hint">Choose an event on the Home page and register to give.</p>
+</aside>
+
+<div class="search-layout">
+  <aside class="hero-panel">
+    <h2>Visit &amp; contact</h2>
+    <dl>
+      <dt>Email</dt>
+      <dd><a [href]="'mailto:' + organisation?.email">{{ organisation?.email }}</a></dd>
+      <dt>Phone</dt>
+      <dd>{{ organisation?.phone }}</dd>
+      <dt>Visit</dt>
+      <dd>{{ organisation?.address }}</dd>
+      <dt>City</dt>
+      <dd>{{ organisation?.city }}</dd>
+      @if (organisation?.website) {
+        <dt>Website</dt>
+        <dd><a [href]="organisation?.website" target="_blank" rel="noopener">{{ organisation?.website }}</a></dd>
+      }
+    </dl>
+    <p class="hint">Office hours: Monday to Friday, 9 am to 5 pm AEST.</p>
+  </aside>
+
+  <section>
+    <h2>Send a message</h2>
+    <form class="contact-form" (ngSubmit)="onSendMessage()">
+      <p class="hint">Required fields are marked with an asterisk.</p>
+
+      <label for="name">Name *</label>
+      <input id="name" name="name" type="text" maxlength="100" required>
+
+      <label for="email">Email *</label>
+      <input id="email" name="email" type="email" maxlength="120" required>
+
+      <label for="message">Message *</label>
+      <textarea id="message" name="message" maxlength="1000" required></textarea>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Send message</button>
+      </div>
+    </form>
+  </section>
+</div>

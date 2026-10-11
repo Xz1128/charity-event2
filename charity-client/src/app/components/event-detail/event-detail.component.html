@@ -1,0 +1,102 @@
+@if (error) {
+  <p class="banner error">{{ error }}</p>
+}
+
+@if (loading) {
+  <div class="loading" role="status" aria-live="polite">
+    <span class="spinner" aria-hidden="true"></span>
+    <span>Loading event details…</span>
+  </div>
+}
+
+@if (event) {
+  <article>
+    <div class="detail-hero">
+      <img [src]="event.imageUrl" [alt]="event.name" width="1200" height="675"
+           fetchpriority="high" decoding="async">
+      <div>
+        <div class="pills">
+          <span class="pill">{{ event.category.name }}</span>
+          <span class="pill" [class.past]="event.status === 'past'">
+            {{ event.status === 'past' ? 'Past event' : 'Upcoming' }}
+          </span>
+        </div>
+        <h1>{{ event.name }}</h1>
+        <p class="lede">{{ event.purpose }}</p>
+        <p class="meta">{{ whenLabel }}</p>
+        <p class="meta">{{ whereLabel }}</p>
+      </div>
+    </div>
+
+    <h2>About this event</h2>
+    <p>{{ event.fullDescription }}</p>
+
+    <div class="ticket-box">
+      <h2>Tickets</h2>
+      <p>Price: <strong>{{ ticketLabel }}</strong></p>
+      <p class="hint">Purchasing a ticket is a donation toward the cause named above.</p>
+    </div>
+
+    <div class="ticket-box">
+      <h2>Goal vs progress</h2>
+      <p>Raised <strong>{{ formatMoney(event.fundsRaised) }}</strong> of
+         <strong>{{ formatMoney(event.fundraisingGoal) }}</strong></p>
+      <div class="progress" aria-hidden="true">
+        <span class="progress-fill" [style.width.%]="event.progressPercent"></span>
+      </div>
+      <p class="hint">{{ event.progressPercent }}% of the goal</p>
+    </div>
+
+    @if (forecast) {
+      <div class="ticket-box">
+        <h2>Weather at the venue</h2>
+        <div class="weather-panel">
+          <div class="weather-current">
+            <span class="weather-temp">{{ forecast.current.temperature }}°C</span>
+            <span class="hint">{{ describeWeather(forecast.current.weatherCode) }} · {{ event.location.suburb }}</span>
+          </div>
+          <div class="weather-days">
+            @for (day of forecast.daily; track day.date) {
+              <div class="weather-day">
+                <div class="dow">{{ weekday(day.date) }}</div>
+                <div class="hi-lo">{{ day.temperatureMax }}° / {{ day.temperatureMin }}°</div>
+                <div class="precip">{{ day.precipitationProbability }}% rain</div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <section class="ticket-box">
+      <h2>Recent registrations</h2>
+      <p class="hint">Registrations are shown with the newest booking first.</p>
+      <div class="registration-list">
+        @if (!event.registrations?.length) {
+          <p class="hint">No registrations have been recorded for this event yet.</p>
+        } @else {
+          @for (registration of event.registrations; track registration.registrationId) {
+            <article class="registration-row">
+              <div>
+                <strong>{{ registration.fullName }}</strong>
+                <p class="hint">Registered {{ formatRegistrationDate(registration.registeredAt) }}</p>
+              </div>
+              <span class="pill">{{ registration.tickets }} ticket{{ registration.tickets === 1 ? '' : 's' }}</span>
+            </article>
+          }
+        }
+      </div>
+    </section>
+
+    <div class="register-box">
+      <h2>Would you like to join?</h2>
+      @if (event.status === 'past') {
+        <p>This event has already been held, so ticket registration is closed.</p>
+        <a class="btn gold disabled-link" [attr.aria-disabled]="true">Register for this event</a>
+      } @else {
+        <p>Choose how many tickets you need and register for this event.</p>
+        <a class="btn gold" [routerLink]="['/register', event.eventId]">Register for this event</a>
+      }
+    </div>
+  </article>
+}
