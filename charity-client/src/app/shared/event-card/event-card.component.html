@@ -1,0 +1,25 @@
+<a class="event-card" [routerLink]="['/event', event.eventId]">
+  <img [src]="event.imageUrl" [alt]="event.name" width="1200" height="675"
+       loading="lazy" decoding="async">
+  <div class="card-body">
+    <div class="pills">
+      <span class="pill">{{ event.category.name }}</span>
+      <span class="pill" [class.past]="event.status === 'past'">{{ statusLabel }}</span>
+      @if (soonLabel) {
+        <span class="pill soon">{{ soonLabel }}</span>
+      }
+      @if (event.isFree) {
+        <span class="pill free">Free</span>
+      }
+    </div>
+    <h3>{{ event.name }}</h3>
+    <p class="meta">{{ formatDate(event.eventDate) }} · {{ event.location.suburb }}</p>
+    <p class="meta">{{ event.shortDescription }}</p>
+    <div class="progress mini" aria-hidden="true">
+      <span class="progress-fill" [style.width.%]="event.progressPercent"></span>
+    </div>
+    <p class="meta card-goal">
+      {{ event.progressPercent }}% of goal · {{ formatMoney(event.fundsRaised) }} raised
+    </p>
+  </div>
+</a>
