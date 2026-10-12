@@ -1,0 +1,174 @@
+<p class="eyebrow">Staff workspace</p>
+<h1>Event management</h1>
+<p class="lede">Create, update, and manage charity events. Events with registrations cannot be deleted; suspend them instead.</p>
+
+@if (notice) {
+  <p class="banner" [class.error]="noticeType === 'error'" [class.info]="noticeType === 'info'">{{ notice }}</p>
+}
+
+<div class="admin-layout">
+  <section>
+    <div class="section-head">
+      <div>
+        <h2>All events</h2>
+        <p class="hint">Includes upcoming, past, and suspended events.</p>
+      </div>
+      <button class="btn gold" type="button" (click)="newEvent()">+ New event</button>
+    </div>
+
+    @if (eventsLoading) {
+      <p class="hint">Loading events…</p>
+    } @else if (!events.length) {
+      <p class="banner empty">No events found.</p>
+    } @else {
+      <div class="admin-event-list">
+        @for (event of events; track event.eventId) {
+          <article class="admin-event">
+            <div class="admin-event-heading">
+              <div>
+                <h3>{{ event.name }}</h3>
+                <p class="meta">{{ eventDateLabel(event) }} · {{ event.location.venueName }}</p>
+              </div>
+              <span class="pill" [class.past]="event.isSuspended || event.status === 'past'">{{ statusLabel(event) }}</span>
+            </div>
+            <p class="meta">{{ event.category.name }} · {{ formatMoney(event.ticketPrice) }} · {{ event.registrationCount }} registrations</p>
+            <div class="form-actions">
+              <button class="btn" type="button" (click)="editEvent(event.eventId)">Edit</button>
+              <button class="btn secondary" type="button" (click)="deleteEvent(event.eventId)">Delete</button>
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+    <section class="category-panel">
+      <h2>Event categories</h2>
+      <form class="contact-form" [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+        <label for="categoryName">Category name *</label>
+        <input id="categoryName" formControlName="name" maxlength="80">
+        <label for="categoryDescription">Description *</label>
+        <input id="categoryDescription" formControlName="description" maxlength="255">
+        <div class="form-actions">
+          <button class="btn gold" type="submit" [disabled]="savingCategory">
+            {{ editingCategoryId ? 'Save category' : 'Add category' }}
+          </button>
+          <button class="btn secondary" type="button" (click)="clearCategoryForm()">Clear</button>
+        </div>
+      </form>
+
+      @if (categoriesLoading) {
+        <p class="hint">Loading categories…</p>
+      } @else if (!categories.length) {
+        <p class="hint">No categories found.</p>
+      } @else {
+        <div class="admin-event-list">
+          @for (category of categories; track category.categoryId) {
+            <article class="admin-event">
+              <h3>{{ category.name }}</h3>
+              <p class="meta">{{ category.description }}</p>
+              <div class="form-actions">
+                <button class="btn" type="button" (click)="editCategory(category.categoryId)">Edit</button>
+                <button class="btn secondary" type="button" (click)="deleteCategory(category.categoryId)">Delete</button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </section>
+
+  <section class="ticket-box" id="event-editor">
+    <h2>{{ editingEventId ? 'Update event #' + editingEventId : 'Create an event' }}</h2>
+    <form [formGroup]="eventForm" (ngSubmit)="saveEvent()">
+      <input type="hidden" formControlName="organisationId">
+
+      <label for="name">Event name *</label>
+      <input id="name" formControlName="name" maxlength="160">
+
+      <label for="purpose">Purpose *</label>
+      <input id="purpose" formControlName="purpose" maxlength="255">
+
+      <label for="shortDescription">Short description *</label>
+      <textarea id="shortDescription" formControlName="shortDescription" maxlength="280"></textarea>
+
+      <label for="fullDescription">Full description *</label>
+      <textarea id="fullDescription" formControlName="fullDescription"></textarea>
+
+      <label for="eventDate">Event date *</label>
+      <input id="eventDate" formControlName="eventDate" type="date">
+
+      <div class="two-fields">
+        <div>
+          <label for="startTime">Start time *</label>
+          <input id="startTime" formControlName="startTime" type="time">
+        </div>
+        <div>
+          <label for="endTime">End time *</label>
+          <input id="endTime" formControlName="endTime" type="time">
+        </div>
+      </div>
+
+      <label for="categoryId">Category *</label>
+      <select id="categoryId" formControlName="categoryId">
+        <option value="">Choose a category</option>
+        @for (category of categories; track category.categoryId) {
+          <option [value]="category.categoryId">{{ category.name }}</option>
+        }
+      </select>
+
+      <label for="locationId">Venue / location *</label>
+      <select id="locationId" formControlName="locationId">
+        <option value="">Choose a venue</option>
+        @for (location of locations; track location.locationId) {
+          <option [value]="location.locationId">{{ location.venueName }} — {{ location.suburb }}</option>
+        }
+      </select>
+
+      <label for="ticketPrice">Ticket price (AUD) *</label>
+      <input id="ticketPrice" formControlName="ticketPrice" type="number" min="0" step="0.01">
+
+      <label for="fundraisingGoal">Fundraising goal (AUD) *</label>
+      <input id="fundraisingGoal" formControlName="fundraisingGoal" type="number" min="0.01" step="0.01">
+
+      <label for="fundsRaised">Funds raised (AUD)</label>
+      <input id="fundsRaised" formControlName="fundsRaised" type="number" min="0" step="0.01">
+
+      <label for="imageUrl">Image URL *</label>
+      <input id="imageUrl" formControlName="imageUrl" maxlength="400">
+
+      <label class="checkbox-label">
+        <input type="checkbox" formControlName="isSuspended">
+        Suspend this event (hide from public listings)
+      </label>
+
+      <div class="form-actions">
+        <button class="btn gold" type="submit" [disabled]="savingEvent">
+          {{ editingEventId ? 'Save changes' : 'Save event' }}
+        </button>
+        <button class="btn secondary" type="button" (click)="resetEventForm()">Clear form</button>
+      </div>
+    </form>
+
+    @if (editingEventId) {
+      <div class="editor-registrations">
+        <h3>Registrations for this event</h3>
+        @if (registrationsLoading) {
+          <p class="hint">Loading registrations…</p>
+        } @else if (!editorRegistrations.length) {
+          <p class="hint">No registrations for this event.</p>
+        } @else {
+          @for (reg of editorRegistrations; track reg.registrationId) {
+            <div class="registration-row">
+              <div>
+                <strong>{{ reg.fullName }}</strong>
+                <p class="hint">{{ reg.email }} · {{ reg.phone }}</p>
+                <p class="hint">{{ formatTimestamp(reg.registeredAt) }}</p>
+              </div>
+              <span class="pill">{{ reg.tickets }} ticket{{ reg.tickets === 1 ? '' : 's' }}</span>
+            </div>
+          }
+        }
+      </div>
+    }
+  </section>
+</div>
